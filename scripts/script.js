@@ -37,7 +37,7 @@ function refreshCount(date){
 
     let number = marchDistance(date);
     let dateString = dateParser(date);
-    dateString = `${dateString[0]}/${dateString[1]}/${dateString[2]}`
+    dateString = `${dateString[0]}/${dateString[1] + 1}/${dateString[2]}`
     numInput.value = number
 
     if(date - currentDate < 0){
