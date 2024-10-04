@@ -50,11 +50,6 @@ function refreshCount(date){
     mainText.textContent = `${number} Marzo`
 }
 
-dateInput.addEventListener("change", e =>{
-    let inputDate = new Date(dateInput.value)
-    refreshCount(inputDate)
-})
-
 document.addEventListener("DOMContentLoaded", e => {
     refreshCount(currentDate);
 })
