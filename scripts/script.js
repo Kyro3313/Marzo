@@ -1,3 +1,5 @@
+const march = new Date(Date.UTC(2023,1,28));
+
 const subText = document.querySelector(".subText")
 const mainText = document.querySelector(".mainText")
 const dateInput = document.getElementById("dateInput")
@@ -6,13 +8,10 @@ const numInput = document.getElementById("numInput")
 let currentDateFormat = dateParser(new Date)
 let currentDate = new Date(Date.UTC(currentDateFormat[2],currentDateFormat[1],currentDateFormat[0]))
 
-console.log(currentDate)
-
 function marchDistance(date){
     /*This function calculates how many
     days have passed since the 1st of march
     2023*/
-    const march = new Date(Date.UTC(2023,2,1));
 
     if(date == undefined){
         date = currentDate
@@ -22,9 +21,7 @@ function marchDistance(date){
 }
 
 function dateFromMarch(number){
-    const march = new Date(Date.UTC(2023,2,1));
-    let result = new Date((number * (1000 * 60 * 60 * 24)) + march.getTime())
-    return result
+    return new Date((number * (1000 * 60 * 60 * 24)) + march.getTime())
 }
 
 function dateParser(date){
@@ -34,7 +31,6 @@ function dateParser(date){
 function refreshCount(date){
     /*Change the text displayed according
     to the Date object passed*/
-
     let number = marchDistance(date);
     let dateString = dateParser(date);
     dateString = `${dateString[0]}/${dateString[1] + 1}/${dateString[2]}`
@@ -64,12 +60,31 @@ document.addEventListener("DOMContentLoaded", e => {
 })
 
 dateInput.addEventListener("change", e =>{
-    let inputValue = new Date(dateInput.value)
-    refreshCount(inputValue)
+    try{
+        let inputValue = new Date(dateInput.value)
+        if(isNaN(inputValue.getTime())){
+            throw new Error("Invalid date object")
+        }
+        refreshCount(inputValue)
+    }catch(e){
+        console.error(e)
+        alert("Invalid date")
+        refreshCount(currentDate)
+    }
 })
 
 numInput.addEventListener("change", e =>{
-    let inputValue = numInput.value
-    console.log(dateFromMarch(inputValue))
-    refreshCount(dateFromMarch(inputValue))
+    try{
+        let inputValue = numInput.value
+        let date = dateFromMarch(inputValue)
+        if(isNaN(date.getTime())){
+            throw new Error("Invalid date object")
+        }
+        refreshCount(date)
+    }catch(e){
+        console.error(e)
+        alert("Invalid number")
+        refreshCount(currentDate)
+    }
+    
 })
